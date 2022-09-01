@@ -35,7 +35,6 @@ class RecipeSearch:
 
         return recipeIngsIndexList
 
-    # searches recipes based on ingredients + cals
     def searchTag(self,myTags):
         recipeTagsIndexList = []
         recipeCounter = 0
@@ -54,8 +53,8 @@ class RecipeSearch:
                 
         return recipeTagsIndexList
 
-    def toFile(self, fileName, meals):
-        with open(fileName, "a") as o:
+    def toFile(self, meals):
+        with open('output.txt', "w") as o:
              for m in meals:
                 print(self.foodDf.loc[m,'name'],file=o)
                 print('Index:', m,file=o)
@@ -88,10 +87,8 @@ class RecipeSearch:
                     stepNum += 1
                 print('\n\n',file=o)
 
-                
-    def checkFavorites(self,recipeIndicesList,favorites):
 
-        
+    def checkFavorites(self,recipeIndicesList,favorites):
         length = int((len(recipeIndicesList)/3)/len(favorites))
 
         for x in favorites:
@@ -101,14 +98,13 @@ class RecipeSearch:
                         recipeIndicesList.append(x)
                        
 
-    def searchNutrition(self, weight, gender, age, height, tagString, ingString, filename, favoriteString):
+    def searchNutrition(self, weight, gender, age, height, tagString, ingString, favoriteString):
 
         # weight lbs, gender "f"/"m", age years, height inches
         bmr = 0
         meals = []
         
-        tags = tagString.split(',') # easy,breakfast --> ['easy', 'breakfast']
-        # easy --> ['easy']
+        tags = tagString.split(',')
         
         ings = ingString.split(',')
         
@@ -120,20 +116,13 @@ class RecipeSearch:
             self.checkFavorites(recipeIndicesList,favorites)
 
         if gender == "m":
-            bmr = 66.47 + (6.24 * weight) + (12.7 * height) - (6.75 * age)
+            bmr = 466.47 + (6.24 * weight) + (12.7 * height) - (6.75 * age)
         if gender == "f":
-            bmr = 65.51 + (4.35 * weight) + (4.7 * height) - (4.7 * age)
-
-        bmr = 2200
+            bmr = 465.51 + (4.35 * weight) + (4.7 * height) - (4.7 * age)
 
         protein = 0.2 * bmr
         carb = 0.55 * bmr
         fat = 0.3 * bmr
-
-    # take 3 random recipes, check if nutrition info matches w/i 100 cal buffer
-        # recipesList = recipeIndexList
-
-        
 
         caloriesMatch = False
         while (caloriesMatch == False):
@@ -145,12 +134,11 @@ class RecipeSearch:
             if (self.checkCals(meals, bmr, protein, carb, fat)):
                 caloriesMatch = True
         
-        self.toFile(filename,meals)
+        self.toFile(meals)
 
 
     # check if given recipes in list meals have matching nutrition count
     # return T or F
-
     def printRecipeInfo(self, meals):
         for m in meals:
             print(self.foodDf.loc[m,'name'])

@@ -10,7 +10,6 @@ class Panel:
     tags =''
     ings =''
     favorites =''
-    filename =''
     mySearch = RecipeSearch.RecipeSearch()
     
     def __init__(self, root):
@@ -22,7 +21,6 @@ class Panel:
         self.tags = tk.StringVar()
         self.ings = tk.StringVar()
         self.favorites = tk.StringVar()
-        self.filename = tk.StringVar()
 
         #setting title
         root.title("Meal Planner")
@@ -154,23 +152,6 @@ class Panel:
         favoritesLabel["text"] = "Favorites"
         favoritesLabel.place(x=30,y=150,width=70,height=25)
 
-        # file name
-        filename1=tk.Entry(root,textvariable=self.filename)
-        filename1["borderwidth"] = "1px"
-        ft = tkFont.Font(family='Times',size=10)
-        filename1["font"] = ft
-        filename1["fg"] = "#333333"
-        filename1["justify"] = "center"
-        filename1.place(x=220,y=210,width=260,height=25)
-
-        fileLabel=tk.Label(root)
-        ft = tkFont.Font(family='Times',size=10)
-        fileLabel["font"] = ft
-        fileLabel["fg"] = "#333333"
-        fileLabel["justify"] = "center"
-        fileLabel["text"] = "Filename"
-        fileLabel.place(x=130,y=210,width=70,height=25)
-
         # calculate button
         calcButton=tk.Button(root)
         calcButton["bg"] = "#f0f0f0"
@@ -185,7 +166,7 @@ class Panel:
  
     def calculate(self):
         
-        self.mySearch.searchNutrition(self.weight.get(), self.gender.get(), self.age.get(), self.height.get(), self.tags.get(), self.ings.get(),self.favorites.get(),self.filename.get())
+        self.mySearch.searchNutrition(self.weight.get(), self.gender.get(), self.age.get(), self.height.get(), self.tags.get(), self.ings.get(),self.favorites.get())
 
 
 if __name__ == "__main__":
